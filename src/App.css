@@ -215,9 +215,10 @@ html {
 /* Параллакс на больших экранах при управлении мышью. */
 @media (min-width: 761px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
   .scene > .scene__layer,
-  .scene > .portal {
-    transition: translate 350ms ease-out;
-  }
+  .scene > .portal,
+  .scene > .lumi {
+  transition: translate 350ms ease-out;
+}
 
   .scene > .scene__layer:nth-child(1) {
     scale: 1.08;
@@ -234,11 +235,12 @@ html {
   }
 
   .scene > .portal,
-  .scene > .scene__foreground {
-    translate:
-      calc(var(--mouse-x, 0) * -56px)
-      calc(var(--mouse-y, 0) * -56px);
-  }
+  .scene > .scene__foreground,
+  .scene > .lumi {
+  translate:
+    calc(var(--mouse-x, 0) * -56px)
+    calc(var(--mouse-y, 0) * -56px);
+}
 }
 
 .magic-cursor {
@@ -293,7 +295,6 @@ html {
     box-shadow: 0 0 14px #b794ff66;
   }
 
-  @media (hover: hover) and (pointer: fine) {
   main,
   main a,
   main button {
@@ -337,4 +338,117 @@ html {
   }
 }
 
+.hero .header,
+.hero .hero__footer {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 1s ease,
+    visibility 0s;
 }
+
+.hero.is-exploring .header,
+.hero.is-exploring .hero__footer {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 1s ease,
+    visibility 0s 1s;
+}
+
+.lumi {
+  position: absolute;
+  left: 55%;
+  top: 64%;
+  width: 13%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lumi__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes lumi-breathe {
+  0%, 100% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: scale(1.012, 1.025);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lumi__image {
+    transform-origin: 50% 100%;
+    animation: lumi-breathe 4s ease-in-out infinite;
+  }
+}
+
+.lumi__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.lumi__particles span {
+  position: absolute;
+  left: var(--x);
+  bottom: 12%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 0 5px 2px #ead5ff,
+    0 0 14px 5px #bd83ff;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lumi__particles span {
+    animation:
+      lumi-spark var(--duration) ease-out
+      var(--delay) infinite;
+  }
+}
+
+@keyframes lumi-spark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+
+  20% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift), -55px) scale(0.2);
+  }
+}
+
+.lumi__glow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  opacity: 0.65;
+  z-index: 1;
+}
+
+/* Прячем прежние точки на время настройки свечения. */
+.lumi__particles {
+  display: none;
+}
+
+

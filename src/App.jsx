@@ -7,6 +7,7 @@ export default function App() {
   const cursorDotRef = useRef(null)
   const cursorRingRef = useRef(null)
   function handleMouseMove(event) {
+    if (isExploring) return
   const scene = sceneRef.current
   if (!scene) return
 
@@ -28,6 +29,14 @@ function handleMouseLeave() {
 }
   function handleExplore(event) {
   event.preventDefault()
+
+  const scene = sceneRef.current
+
+  if (scene) {
+    scene.style.setProperty('--mouse-x', 0)
+    scene.style.setProperty('--mouse-y', 0)
+  }
+
   setIsExploring(true)
 }
 
@@ -73,8 +82,6 @@ function handleCursorLeave() {
       <div className="magic-cursor" aria-hidden="true">
         <span className="magic-cursor__dot" ref={cursorDotRef} />
         <span className="magic-cursor__ring" ref={cursorRingRef} />
-        <span className="magic-cursor__dot" />
-        <span className="magic-cursor__ring" />
       </div>
       <section
           className={isExploring ? 'hero is-exploring' : 'hero'}
@@ -111,6 +118,36 @@ function handleCursorLeave() {
             src="/scene/05-foreground-stairway.png"
             alt=""
           />
+          <div className="lumi">
+          <img
+            className="lumi__image"
+            src="/characters/lumi.png"
+            alt=""
+            draggable={false}
+          />
+          <img
+            className="lumi__glow"
+            src="/characters/lumi-glow.png"
+            alt=""
+            draggable={false}
+          />
+          
+
+          <div className="lumi__particles">
+            {Array.from({ length: 18 }, (_, index) => (
+              <span
+                key={index}
+                style={{
+                  '--x': `${10 + (index * 19) % 80}%`,
+                  '--delay': `${-index * 0.6}s`,
+                  '--duration': `${3 + index % 4}s`,
+                  '--drift': `${(index % 5 - 2) * 8}px`,
+                }}
+              />
+            ))}
+            </div>
+        </div>
+
         </div>
 
         {/* Затемнение под текстом помогает сохранить читаемость. */}
