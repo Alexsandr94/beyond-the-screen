@@ -118,10 +118,57 @@ function handleCursorLeave() {
             src="/scene/05-foreground-stairway.png"
             alt=""
           />
-          <div className="lumi">
+          {/* Затемнение под текстом помогает сохранить читаемость. */}
+          <div className="hero__shade" aria-hidden="true" />
+            <div className="lumi">
+              <div className="lumi-footprints" aria-hidden="true">
+                {Array.from({ length: 12 }, (_, index) => {
+                  const progress = index / 11
+
+                  return (
+                    <span
+                      className="lumi-footprint"
+                      key={index}
+                      style={{
+                        '--step-x': `${63 + progress * 12 + (index % 2 ? 0.4 : -0.4)}%`,
+                        '--step-y': `${85 - progress * 20}%`,
+                        '--step-delay': `${0.2 + progress * 5.4}s`,
+                        '--step-scale': 1 - progress * 0.45,
+                      }}
+                    >
+                      <i />
+                      <i />
+                      <i />
+                      <i />
+                    </span>
+                  )
+                })}
+              </div>
+            <div className="lumi__walk" />
+            <div className="lumi__idle">
+          <img
+            className="lumi__ear lumi__ear--left"
+            src="/characters/lumi-ear-left.png"
+            alt=""
+            draggable={false}
+          />
+
+          <img
+            className="lumi__ear lumi__ear--right"
+            src="/characters/lumi-ear-right.png"
+            alt=""
+            draggable={false}
+          />
+
           <img
             className="lumi__image"
-            src="/characters/lumi.png"
+            src="/characters/lumi-body.png"
+            alt=""
+            draggable={false}
+          />
+          <img
+            className="lumi__blink"
+            src="/characters/lumi-blink.png"
             alt=""
             draggable={false}
           />
@@ -131,7 +178,60 @@ function handleCursorLeave() {
             alt=""
             draggable={false}
           />
-          
+
+          <svg
+            className="lumi__magic"
+            viewBox="0 0 100 120"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+              {[
+                
+                  // Хвост слева.
+                  "M 29 70 C 17 62, 3 73, 9 85 S 29 94, 22 106",
+                  "M 27 68 C 13 63, 1 77, 8 88 S 26 97, 22 106",
+                  "M 30 73 C 20 66, 7 74, 12 84 S 31 95, 22 106",
+
+                  // Верхний хвост справа.
+                  "M 65 64 C 75 51, 91 57, 96 70 C 99 78, 96 84, 92 85",
+                  "M 67 66 C 78 56, 89 61, 93 72 C 97 79, 95 83, 92 85",
+                  "M 64 68 C 76 60, 86 64, 91 75 C 94 80, 94 83, 92 85",
+
+                  // Нижний хвост справа.
+                  "M 62 82 C 77 78, 98 92, 95 104 C 94 113, 77 110, 73 117",
+                  "M 64 85 C 78 82, 94 94, 92 103 C 91 110, 78 109, 73 117",
+                  "M 63 88 C 76 86, 89 96, 88 103 C 87 108, 77 110, 73 117",
+                ].map((path, trailIndex) =>
+                Array.from({ length: 10 }, (_, index) => {
+                  const duration = 10 + (trailIndex % 3) * 1.2
+                  const begin = -(index * duration / 10 + trailIndex * 0.17)
+
+                  return (
+                    <circle
+                      key={`${trailIndex}-${index}`}
+                      r={index % 4 === 0 ? 0.65 : 0.38}
+                      fill={trailIndex === 1 ? '#dfbaff' : '#fff5ff'}
+                    >
+                      <animateMotion
+                        dur={`${duration}s`}
+                        begin={`${begin}s`}
+                        repeatCount="indefinite"
+                        path={path}
+                      />
+
+                      <animate
+                        attributeName="opacity"
+                        values="0;1;1;0"
+                        keyTimes="0;0.15;0.75;1"
+                        dur={`${duration}s`}
+                        begin={`${begin}s`}
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  )
+                })
+              )}
+          </svg>
 
           <div className="lumi__particles">
             {Array.from({ length: 18 }, (_, index) => (
@@ -145,13 +245,13 @@ function handleCursorLeave() {
                 }}
               />
             ))}
-            </div>
-        </div>
+          </div> {/* конец lumi__particles */}
+        </div> {/* конец lumi__idle */}
+      </div> {/* конец lumi */}
+    </div> {/* конец scene */}
+        
 
-        </div>
-
-        {/* Затемнение под текстом помогает сохранить читаемость. */}
-        <div className="hero__shade" aria-hidden="true" />
+        
 
         <header className="header">
           <a className="brand" href="#top" aria-label="Beyond the Screen — home">
@@ -167,7 +267,7 @@ function handleCursorLeave() {
             <h1 id="hero-title">
               Every idea<br />
               opens a<br />
-              <span>new world.</span>
+              <span>new world</span>
             </h1>
             <p className="hero__description">
               An interactive journey into my future in frontend.
@@ -202,7 +302,11 @@ function handleCursorLeave() {
             Beyond the Screen is my project about the creative side of frontend:
             how design, code and interaction can bring an idea to life.
           </p>
-          <a className="text-link" href="#top">Back to the portal <span aria-hidden="true">↑</span></a>
+          <a
+            className="text-link"
+            href="#top"
+            onClick={() => setIsExploring(false)}
+          >Back to the portal <span aria-hidden="true">↑</span></a>
         </div>
       </section>
     </main>
