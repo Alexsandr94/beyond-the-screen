@@ -1,0 +1,167 @@
+.orbit-passage {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  overflow: hidden;
+  isolation: isolate;
+  background: #070e1e;
+  color: #eef5ff;
+  cursor: auto;
+  touch-action: none;
+  animation: orbit-cover 0.24s ease-out both;
+  transition: opacity var(--passage-reveal) ease;
+}
+.orbit-passage.is-revealing {
+  opacity: 0;
+  animation: none;
+}
+.orbit-passage__sky {
+  position: absolute;
+  inset: -5%;
+  background:
+    linear-gradient(#080e2290, #080e22aa),
+    url("/observatory/observatory-sky.png") center/cover;
+  animation: orbit-sky var(--passage-duration) ease-in-out both;
+}
+.orbit-passage__rings {
+  position: absolute;
+  width: min(75vw, 700px);
+  aspect-ratio: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  perspective: 900px;
+}
+.orbit-passage__rings i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ffe5ae;
+  border-radius: 50%;
+  box-shadow:
+    0 0 28px #ffc87455,
+    inset 0 0 28px #ffc87433;
+  animation: orbit-ring var(--passage-duration) ease-in-out both;
+  --angle: 25deg;
+}
+.orbit-passage__rings i:nth-child(2) {
+  inset: 10%;
+  --angle: 95deg;
+}
+.orbit-passage__rings i:nth-child(3) {
+  inset: 20%;
+  --angle: 155deg;
+}
+.orbit-passage__fragments {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.orbit-passage__fragments i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35px;
+  height: 22px;
+  border: 1px solid #ffdeaa88;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #ffdc9a33, #c5e6ff22);
+  animation: orbit-fragment 3.5s ease-in-out var(--delay) both;
+}
+.orbit-passage__copy {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 43%;
+  text-align: center;
+  text-shadow: 0 3px 25px #030713;
+}
+.orbit-passage__copy p {
+  font: 10px/1.5 var(--font-title, Arial, sans-serif);
+  letter-spacing: 0.3em;
+  color: #d3e8ff;
+}
+.orbit-passage h2 {
+  font: 400 clamp(36px, 5vw, 75px)/1.1 var(--font-display, Georgia, serif);
+  margin: 20px 0;
+}
+.orbit-passage__copy span {
+  font: 12px/1.5 var(--font-title, Arial, sans-serif);
+  color: #b8c9df;
+}
+.orbit-passage__skip {
+  position: absolute;
+  bottom: 30px;
+  right: 5%;
+  background: #081225cc;
+  color: white;
+  border: 1px solid #d3e8ff70;
+  border-radius: 30px;
+  padding: 14px 24px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.orbit-passage__skip:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 5px;
+}
+@keyframes orbit-cover {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes orbit-sky {
+  from {
+    transform: scale(1.04);
+    filter: sepia(0.7);
+  }
+  to {
+    transform: scale(1.16);
+    filter: sepia(0);
+  }
+}
+@keyframes orbit-ring {
+  0% {
+    transform: rotate(var(--angle)) rotateX(70deg) scale(0.4);
+    opacity: 0;
+  }
+  28% {
+    opacity: 1;
+  }
+  70% {
+    transform: rotate(calc(var(--angle) + 70deg)) rotateX(45deg) scale(1);
+    border-color: #b8eaff;
+  }
+  100% {
+    transform: rotate(calc(var(--angle) + 110deg)) rotateX(0deg) scale(1.8);
+    opacity: 0.4;
+    border-color: #b8eaff;
+  }
+}
+@keyframes orbit-fragment {
+  from {
+    transform: rotate(var(--angle)) translateX(80vw) rotate(80deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  70% {
+    transform: rotate(calc(var(--angle) + 80deg)) translateX(var(--distance))
+      rotate(0);
+    opacity: 0.7;
+  }
+  to {
+    transform: rotate(calc(var(--angle) + 115deg)) translateX(70px) scale(0.1);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-passage,
+  .orbit-passage * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

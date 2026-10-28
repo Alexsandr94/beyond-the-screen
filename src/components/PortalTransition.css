@@ -1,0 +1,302 @@
+.between-worlds {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  isolation: isolate;
+  overflow: hidden;
+  background: #060b1a;
+  color: #f7f0ff;
+  opacity: 1;
+  animation: between-cover 220ms ease-out both;
+  transition: opacity var(--between-reveal, 460ms) ease-in;
+  touch-action: none;
+  cursor: auto;
+}
+.between-worlds,
+.between-worlds * {
+  box-sizing: border-box;
+}
+.between-worlds.is-revealing {
+  opacity: 0;
+  animation: none;
+}
+.between-worlds__art {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --depth-x: 0px;
+  --depth-y: 0px;
+}
+.between-worlds__camera {
+  position: absolute;
+  inset: 0;
+  transform-origin: 76% 36%;
+  animation: between-camera var(--between-duration) cubic-bezier(0.3, 0, 0.4, 1)
+    both;
+}
+/* Оригинальная композиция целиком. Все привязанные эффекты используют тот же холст. */
+.between-worlds__plate {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100vw, 177.6833svh);
+  aspect-ratio: 1672 / 941;
+  transform: translate(-50%, -50%)
+    translate(calc(var(--depth-x) * -0.35), calc(var(--depth-y) * -0.35));
+}
+.between-worlds__background {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.between-worlds__portal-light {
+  position: absolute;
+  left: 60%;
+  top: -6%;
+  width: 33%;
+  height: 65%;
+  border-radius: 50%;
+  transform: rotate(13deg);
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    ellipse,
+    #ffe2a31a 40%,
+    #fff0ca88 64%,
+    #c6cfff55 68%,
+    transparent 73%
+  );
+  filter: blur(9px);
+  animation: between-glow 1.25s ease-in-out infinite alternate;
+}
+.between-worlds__tail-light {
+  position: absolute;
+  left: 38%;
+  top: 53%;
+  width: 29%;
+  height: 24%;
+  transform: rotate(-24deg);
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    ellipse,
+    #e4eaff66,
+    #d9d7ff22 40%,
+    transparent 70%
+  );
+  animation: between-glow 1.1s ease-in-out -0.5s infinite alternate;
+}
+.between-worlds__tail-sparks {
+  position: absolute;
+  inset: 0;
+}
+.between-worlds__tail-sparks i {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow:
+    0 0 5px 1px #e5eaff,
+    0 0 13px #bfcfff;
+  animation: between-tail 2.1s ease-in-out calc(var(--i) * -0.17s) infinite;
+}
+/* Закрываем нарисованный Skip: настоящая кнопка находится отдельно от камеры. */
+.between-worlds__printed-skip-cover {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 9%;
+  height: 12%;
+  background: radial-gradient(
+    ellipse at 80% 65%,
+    #101427 40%,
+    #101427ee 60%,
+    transparent 75%
+  );
+}
+.between-worlds__particles,
+.between-worlds__near-dust {
+  position: absolute;
+  inset: -4%;
+}
+.between-worlds__particles {
+  transform: translate(
+    calc(var(--depth-x) * -1.2),
+    calc(var(--depth-y) * -1.2)
+  );
+}
+.between-worlds__near-dust {
+  transform: translate(
+    calc(var(--depth-x) * -2.4),
+    calc(var(--depth-y) * -2.4)
+  );
+}
+.between-worlds__particles span,
+.between-worlds__near-dust span {
+  position: absolute;
+  left: 75%;
+  top: 39%;
+  width: var(--particle-size);
+  height: var(--particle-size);
+  border-radius: 50%;
+  background: #f6fbff;
+  opacity: 0;
+  box-shadow: 0 0 7px #d9dfff;
+  animation: between-spark 4.2s ease-in var(--particle-delay) infinite;
+}
+.between-worlds__near-dust span {
+  width: 5px;
+  height: 5px;
+  filter: blur(1.2px);
+  box-shadow: 0 0 12px 3px #d9dfff;
+  animation-duration: 3.1s;
+}
+/* Текст уже нарисован на исходнике. Доступная HTML-копия скрыта только визуально. */
+.between-worlds__copy {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.between-worlds__skip {
+  position: absolute;
+  right: max(3vw, 20px);
+  bottom: max(4vh, 22px);
+  z-index: 5;
+  min-height: 44px;
+  min-width: 90px;
+  padding: 10px 16px;
+  border: 1px solid #d8c7ff66;
+  border-radius: 30px;
+  background: #080d1bd9;
+  color: #fff3e7;
+  cursor: pointer;
+  font: 13px/1.5 var(--font-title, sans-serif);
+  letter-spacing: 0.06em;
+}
+.between-worlds__skip span {
+  margin-left: 15px;
+}
+.between-worlds__skip:hover {
+  background: #302341;
+  border-color: #eadcff;
+}
+.between-worlds__skip:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 5px;
+}
+@keyframes between-cover {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes between-camera {
+  0% {
+    transform: scale(1.035);
+  }
+  72% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1.18);
+  }
+}
+@keyframes between-glow {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 0.95;
+  }
+}
+@keyframes between-tail {
+  0%,
+  100% {
+    opacity: 0;
+    translate: 0 6px;
+    scale: 0.5;
+  }
+  35% {
+    opacity: 1;
+    scale: 1.4;
+  }
+  85% {
+    opacity: 0.4;
+    translate: 28px -16px;
+  }
+}
+@keyframes between-spark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.15);
+  }
+  20% {
+    opacity: 0.75;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--px), var(--py)) scale(1.2);
+  }
+}
+@media (max-aspect-ratio: 1/1) {
+  .between-worlds__plate {
+    left: 72%;
+    transform: translate(-72%, -50%)
+      translate(calc(var(--depth-x) * -0.35), calc(var(--depth-y) * -0.35));
+  }
+  .between-worlds__camera {
+    transform-origin: 70% 35%;
+  }
+  .between-worlds__copy {
+    width: auto;
+    height: auto;
+    margin: 0;
+    left: 7%;
+    right: 7%;
+    bottom: 16%;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    text-shadow: 0 2px 12px #000;
+  }
+  .between-worlds__copy::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -35px -15vw -20vh;
+    background: linear-gradient(transparent, #060b1ad9 35%);
+  }
+  .between-worlds__eyebrow {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+  }
+  .between-worlds h2 {
+    font: 400 clamp(26px, 7vw, 40px)/1.2 var(--font-display, Georgia, serif);
+    margin: 12px 0;
+  }
+  #between-description {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .between-worlds,
+  .between-worlds * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .between-worlds__particles,
+  .between-worlds__near-dust,
+  .between-worlds__tail-sparks {
+    display: none;
+  }
+}

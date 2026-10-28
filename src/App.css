@@ -28,18 +28,41 @@ html {
   user-select: none;
 }
 
-.scene__layer { position: absolute; inset: 0; width: 100%; height: 100%; }
-.scene__foreground { top: 10.5%; }
+.scene__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.scene__foreground {
+  top: 10.5%;
+}
 
 /* Положение портала согласовано с верхней площадкой лестницы. */
-.portal { position: absolute; left: 63.5%; top: 4.5%; width: 23.9%; aspect-ratio: 2 / 3; }
-.portal__frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+.portal {
+  position: absolute;
+  left: 63.5%;
+  top: 4.5%;
+  width: 23.9%;
+  aspect-ratio: 2 / 3;
+}
+.portal__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
 .portal__view {
   position: absolute;
   inset: 0;
   clip-path: polygon(30% 17%, 71% 14%, 71% 97%, 30% 97%);
 }
-.portal__view img { width: 100%; height: 100%; object-fit: cover; object-position: 64% center; }
+.portal__view img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 64% center;
+}
 
 .hero__shade {
   position: absolute;
@@ -47,67 +70,277 @@ html {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgb(5 8 18 / 90%), rgb(5 8 18 / 52%) 33%, transparent 70%),
-    linear-gradient(0deg, rgb(5 8 18 / 85%), transparent 30%, transparent 85%, rgb(5 8 18 / 35%));
+    linear-gradient(
+      90deg,
+      rgb(5 8 18 / 90%),
+      rgb(5 8 18 / 52%) 33%,
+      transparent 70%
+    ),
+    linear-gradient(
+      0deg,
+      rgb(5 8 18 / 85%),
+      transparent 30%,
+      transparent 85%,
+      rgb(5 8 18 / 35%)
+    );
 }
 
-.header, .hero__content, .hero__footer { position: relative; z-index: 2; }
-.header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 4.5vw; }
-.brand { display: flex; align-items: center; gap: 18px; text-decoration: none; text-transform: uppercase; font: 500 12px var(--font-title); letter-spacing: 0.18em; }
-.brand__mark { display: grid; place-items: center; width: 28px; height: 42px; flex-shrink: 0; border: 1px solid var(--lavender); color: #e6dbff; font-size: 20px; letter-spacing: 0; box-shadow: 0 0 20px #b7a0ff38, inset 0 0 12px #b7a0ff28; transform: skewY(-8deg); }
-.text-link { font-size: 14px; line-height: 1.6; text-underline-offset: 6px; text-decoration-color: #b7a0ff70; }
-.text-link:hover { color: var(--lavender); }
+.header,
+.hero__content,
+.hero__footer {
+  position: relative;
+  z-index: 2;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 4.5vw;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font: 500 12px var(--font-title);
+  letter-spacing: 0.18em;
+}
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid var(--lavender);
+  color: #e6dbff;
+  font-size: 20px;
+  letter-spacing: 0;
+  box-shadow:
+    0 0 20px #b7a0ff38,
+    inset 0 0 12px #b7a0ff28;
+  transform: skewY(-8deg);
+}
+.text-link {
+  font-size: 14px;
+  line-height: 1.6;
+  text-underline-offset: 6px;
+  text-decoration-color: #b7a0ff70;
+}
+.text-link:hover {
+  color: var(--lavender);
+}
 
-.hero__content { display: flex; align-items: center; flex: 1; padding: 38px 4.5vw 54px; }
-.hero__copy { width: 53%; max-width: 760px; }
-.eyebrow { color: var(--cyan); font-size: 11px; line-height: 1.6; letter-spacing: 0.28em; text-transform: uppercase; }
-.hero h1 { margin-top: 15px; font: 400 clamp(44px, 5.7vw, 96px) / 1.1 var(--font-display); letter-spacing: -0.015em; }
-.hero h1 span { color: var(--lavender); }
-.hero__description { max-width: 450px; margin: 26px 0 30px; color: #d0cfdf; font-size: clamp(16px, 1.25vw, 20px); line-height: 1.6; }
-.explore-button { display: inline-flex; align-items: center; justify-content: space-between; gap: 36px; padding: 17px 27px; border: 1px solid #dccfff; border-radius: 999px; background: var(--lavender); color: #161026; text-decoration: none; font: 500 15px var(--font-title); letter-spacing: 0.025em; box-shadow: 0 6px 35px #8d68dc38; transition: transform 180ms ease, background 180ms ease; }
-.explore-button:hover { transform: translateY(-3px); background: #d1bfff; }
-.explore-button span { font: 22px sans-serif; }
+.hero__content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 38px 4.5vw 54px;
+}
+.hero__copy {
+  width: 53%;
+  max-width: 760px;
+}
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin-top: 15px;
+  font: 400 clamp(44px, 5.7vw, 96px) / 1.1 var(--font-display);
+  letter-spacing: -0.015em;
+}
+.hero h1 span {
+  color: var(--lavender);
+}
+.hero__description {
+  max-width: 450px;
+  margin: 26px 0 30px;
+  color: #d0cfdf;
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.6;
+}
+.explore-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  padding: 17px 27px;
+  border: 1px solid #dccfff;
+  border-radius: 999px;
+  background: var(--lavender);
+  color: #161026;
+  text-decoration: none;
+  font: 500 15px var(--font-title);
+  letter-spacing: 0.025em;
+  box-shadow: 0 6px 35px #8d68dc38;
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
+}
+.explore-button:hover {
+  transform: translateY(-3px);
+  background: #d1bfff;
+}
+.explore-button span {
+  font: 22px sans-serif;
+}
 
-.hero__footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 4.5vw 30px; color: #d0cfdf; font-size: 12px; }
-.chapter { display: flex; align-items: center; gap: 8px; }
-.chapter b { color: #f4f1f8; font-weight: 400; }
-.chapter__line { width: 100px; height: 1px; margin-left: 16px; background: linear-gradient(90deg, var(--lavender) 25%, #ffffff30 25%); }
-.scroll-link { display: flex; gap: 12px; text-decoration: none; }
-.scroll-link:hover { color: var(--lavender); }
-.chapter-name { text-transform: uppercase; letter-spacing: 0.18em; }
+.hero__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 4.5vw 30px;
+  color: #d0cfdf;
+  font-size: 12px;
+}
+.chapter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chapter b {
+  color: #f4f1f8;
+  font-weight: 400;
+}
+.chapter__line {
+  width: 100px;
+  height: 1px;
+  margin-left: 16px;
+  background: linear-gradient(90deg, var(--lavender) 25%, #ffffff30 25%);
+}
+.scroll-link {
+  display: flex;
+  gap: 12px;
+  text-decoration: none;
+}
+.scroll-link:hover {
+  color: var(--lavender);
+}
+.chapter-name {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
 
-.about { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding: 110px max(4.5vw, 24px); border-top: 1px solid #ffffff12; scroll-margin-top: 24px; }
-.about > div { max-width: 670px; }
-.about h2 { margin-bottom: 26px; font: 400 clamp(32px, 3.3vw, 56px) / 1.15 var(--font-display); letter-spacing: -0.02em; }
-.about h2 em { color: var(--lavender); font-weight: 400; font-style: normal; }
-.about p:not(.eyebrow) { margin-bottom: 20px; color: #c3c3d3; font-size: 18px; line-height: 1.8; }
-.about .text-link { display: inline-block; margin-top: 10px; }
+.about {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  padding: 110px max(4.5vw, 24px);
+  border-top: 1px solid #ffffff12;
+  scroll-margin-top: 24px;
+}
+.about > div {
+  max-width: 670px;
+}
+.about h2 {
+  margin-bottom: 26px;
+  font: 400 clamp(32px, 3.3vw, 56px) / 1.15 var(--font-display);
+  letter-spacing: -0.02em;
+}
+.about h2 em {
+  color: var(--lavender);
+  font-weight: 400;
+  font-style: normal;
+}
+.about p:not(.eyebrow) {
+  margin-bottom: 20px;
+  color: #c3c3d3;
+  font-size: 18px;
+  line-height: 1.8;
+}
+.about .text-link {
+  display: inline-block;
+  margin-top: 10px;
+}
 
 /* На узком экране центрируем портал и размещаем текст ниже. */
 @media (max-width: 760px) {
-  .hero { min-height: 900px; }
-  .scene { width: max(177.68svh, 1600px); transform: translate(-75.5%, -50%); }
-  .hero__shade { background: linear-gradient(0deg, #080d1b 0%, rgb(8 13 27 / 97%) 18%, rgb(8 13 27 / 72%) 39%, transparent 72%, rgb(8 13 27 / 55%) 100%); }
-  .header { padding: 24px; gap: 14px; align-items: flex-start; }
-  .brand { gap: 12px; max-width: 205px; font-size: 10px; line-height: 1.8; letter-spacing: 0.2em; }
-  .header .text-link { max-width: 90px; font-size: 12px; text-align: right; }
-  .hero__content { align-items: flex-end; padding: 320px 24px 26px; }
-  .hero__copy { width: 100%; max-width: 530px; }
-  .hero h1 { font-size: clamp(36px, 10vw, 64px); }
-  .hero__description { max-width: 330px; margin: 22px 0; }
-  .hero__footer { padding: 22px 24px 26px; }
-  .chapter__line { width: 48px; margin-left: 6px; }
-  .chapter-name { display: none; }
-  .about { grid-template-columns: 1fr; gap: 24px; padding: 76px 24px; }
-  .about p:not(.eyebrow) { font-size: 16px; }
+  .hero {
+    min-height: 900px;
+  }
+  .scene {
+    width: max(177.68svh, 1600px);
+    transform: translate(-75.5%, -50%);
+  }
+  .hero__shade {
+    background: linear-gradient(
+      0deg,
+      #080d1b 0%,
+      rgb(8 13 27 / 97%) 18%,
+      rgb(8 13 27 / 72%) 39%,
+      transparent 72%,
+      rgb(8 13 27 / 55%) 100%
+    );
+  }
+  .header {
+    padding: 24px;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .brand {
+    gap: 12px;
+    max-width: 205px;
+    font-size: 10px;
+    line-height: 1.8;
+    letter-spacing: 0.2em;
+  }
+  .header .text-link {
+    max-width: 90px;
+    font-size: 12px;
+    text-align: right;
+  }
+  .hero__content {
+    align-items: flex-end;
+    padding: 320px 24px 26px;
+  }
+  .hero__copy {
+    width: 100%;
+    max-width: 530px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 10vw, 64px);
+  }
+  .hero__description {
+    max-width: 330px;
+    margin: 22px 0;
+  }
+  .hero__footer {
+    padding: 22px 24px 26px;
+  }
+  .chapter__line {
+    width: 48px;
+    margin-left: 6px;
+  }
+  .chapter-name {
+    display: none;
+  }
+  .about {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 76px 24px;
+  }
+  .about p:not(.eyebrow) {
+    font-size: 16px;
+  }
 }
 
 /* Этап 3: анимация. Не требует дополнительных библиотек. */
 .hero__copy > * {
   animation: text-arrive 3000ms ease-in-out backwards;
 }
-.hero__copy .eyebrow { animation-delay: 100ms; }
-.hero__copy h1 { animation-name: magic-title; animation-delay: 250ms; }
+.hero__copy .eyebrow {
+  animation-delay: 100ms;
+}
+.hero__copy h1 {
+  animation-name: magic-title;
+  animation-delay: 250ms;
+}
 @keyframes magic-title {
   0% {
     opacity: 0;
@@ -117,13 +350,13 @@ html {
   }
 
   50% {
-  opacity: 1;
-  filter: blur(1px);
-  text-shadow:
-    0 0 8px #ffffff,
-    0 0 25px #d4b5ff,
-    0 0 60px #a56bff;
-}
+    opacity: 1;
+    filter: blur(1px);
+    text-shadow:
+      0 0 8px #ffffff,
+      0 0 25px #d4b5ff,
+      0 0 60px #a56bff;
+  }
 
   100% {
     opacity: 1;
@@ -132,11 +365,21 @@ html {
     text-shadow: 0 0 0 transparent;
   }
 }
-.hero__copy .hero__description { animation-delay: 450ms; }
-.hero__copy .explore-button { animation-delay: 650ms; }
+.hero__copy .hero__description {
+  animation-delay: 450ms;
+}
+.hero__copy .explore-button {
+  animation-delay: 650ms;
+}
 @keyframes text-arrive {
-  from { opacity: 0; translate: 0 24px; }
-  to { opacity: 1; translate: 0 0; }
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 /* Свет расположен внутри уже обрезанного проёма портала. */
@@ -146,12 +389,7 @@ html {
   inset: 0;
   pointer-events: none;
 
-  clip-path: polygon(
-    30% 17%,
-    71% 14%,
-    71% 97%,
-    30% 97%
-  );
+  clip-path: polygon(30% 17%, 71% 14%, 71% 97%, 30% 97%);
 
   background: #c9a3ff;
   mix-blend-mode: screen;
@@ -167,7 +405,11 @@ html {
   }
 }
 
-.portal__particles { position: absolute; inset: 0; pointer-events: none; }
+.portal__particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 .portal__particles span {
   position: absolute;
   left: var(--x);
@@ -181,66 +423,104 @@ html {
   animation: spark-rise var(--duration) linear var(--delay) infinite;
 }
 @keyframes spark-rise {
-  0% { opacity: 0; transform: translate(0, 0) scale(.5); }
-  18% { opacity: .85; }
-  75% { opacity: .65; }
-  100% { opacity: 0; transform: translate(var(--drift), -340px) scale(.25); }
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+  18% {
+    opacity: 0.85;
+  }
+  75% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift), -340px) scale(0.25);
+  }
 }
 .explore-button {
-  transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+  transition:
+    transform 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
 }
-.explore-button:hover, .explore-button:focus-visible {
+.explore-button:hover,
+.explore-button:focus-visible {
   transform: translateY(-3px);
   background: #d1bfff;
   box-shadow: 0 8px 42px #aa83ff70;
 }
-.explore-button span { transition: transform 220ms ease; }
-.explore-button:hover span { transform: translate(3px, -3px); }
-.explore-button:active { transform: translateY(0); }
-.hero a:focus-visible { outline: 2px solid #e6dbff; outline-offset: 6px; }
-.scroll-link span { display: inline-block; animation: scroll-hint 2s ease-in-out infinite; }
+.explore-button span {
+  transition: transform 220ms ease;
+}
+.explore-button:hover span {
+  transform: translate(3px, -3px);
+}
+.explore-button:active {
+  transform: translateY(0);
+}
+.hero a:focus-visible {
+  outline: 2px solid #e6dbff;
+  outline-offset: 6px;
+}
+.scroll-link span {
+  display: inline-block;
+  animation: scroll-hint 2s ease-in-out infinite;
+}
 @keyframes scroll-hint {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
 }
 
 /* Уважение к системной настройке уменьшения движения. */
 @media (prefers-reduced-motion: reduce) {
-  .hero__copy > *, .portal__view::after, .portal__particles span,
-  .scroll-link span { animation: none; }
-  .portal__particles { display: none; }
-  .explore-button, .explore-button span { transition: none; }
-  html { scroll-behavior: auto; }
+  .hero__copy > *,
+  .portal::after,
+  .portal__particles span,
+  .scroll-link span {
+    animation: none;
+  }
+  .portal__particles {
+    display: none;
+  }
+  .explore-button,
+  .explore-button span {
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
 /* Параллакс на больших экранах при управлении мышью. */
 @media (min-width: 761px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
   .scene > .scene__layer,
   .scene > .portal,
-  .scene > .lumi {
-  transition: translate 350ms ease-out;
-}
+  .scene > .lumi,
+  .scene > .lumi-footprints {
+    transition: translate 350ms ease-out;
+  }
 
   .scene > .scene__layer:nth-child(1) {
     scale: 1.08;
-    translate:
-      calc(var(--mouse-x, 0) * -12px)
-      calc(var(--mouse-y, 0) * -12px);
+    translate: calc(var(--mouse-x, 0) * -12px) calc(var(--mouse-y, 0) * -12px);
   }
 
   .scene > .scene__layer:nth-child(2) {
     scale: 1.08;
-    translate:
-      calc(var(--mouse-x, 0) * -32px)
-      calc(var(--mouse-y, 0) * -32px);
+    translate: calc(var(--mouse-x, 0) * -32px) calc(var(--mouse-y, 0) * -32px);
   }
 
   .scene > .portal,
   .scene > .scene__foreground,
-  .scene > .lumi {
-  translate:
-    calc(var(--mouse-x, 0) * -56px)
-    calc(var(--mouse-y, 0) * -56px);
-}
+  .scene > .lumi,
+  .scene > .lumi-footprints {
+    translate: calc(var(--mouse-x, 0) * -56px) calc(var(--mouse-y, 0) * -56px);
+  }
 }
 
 .magic-cursor {
@@ -260,26 +540,24 @@ html {
   .magic-cursor__dot,
   .magic-cursor__ring {
     position: absolute;
+    opacity: 0;
     left: 0;
     top: 0;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition:
-      left 180ms ease-out,
-      top 180ms ease-out,
       width 200ms ease,
       height 200ms ease,
       background 200ms ease,
       box-shadow 200ms ease;
-      opacity: 0;
   }
 
   .magic-cursor__ring.is-hovering {
-  width: 52px;
-  height: 52px;
-  background: #c9a3ff18;
-  box-shadow: 0 0 24px #b794ff99;
-}
+    width: 52px;
+    height: 52px;
+    background: #c9a3ff18;
+    box-shadow: 0 0 24px #b794ff99;
+  }
 
   .magic-cursor__dot {
     width: 5px;
@@ -295,9 +573,9 @@ html {
     box-shadow: 0 0 14px #b794ff66;
   }
 
-  main,
-  main a,
-  main button {
+  main.has-magic-cursor,
+  main.has-magic-cursor a,
+  main.has-magic-cursor button {
     cursor: none;
   }
 }
@@ -318,7 +596,12 @@ html {
 
 .scene {
   transform-origin: 75.5% 42%;
-  transition: transform 6s ease-in-out;
+  transition: none;
+}
+
+.hero.is-exploring .scene {
+  transition: transform var(--journey-duration, 6s) ease-in-out
+    var(--departure-delay, 0.35s);
 }
 
 .hero.is-exploring .scene {
@@ -374,7 +657,8 @@ html {
 }
 
 @keyframes lumi-breathe {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1, 1);
   }
 
@@ -390,51 +674,6 @@ html {
   }
 }
 
-.lumi__particles {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.lumi__particles span {
-  position: absolute;
-  left: var(--x);
-  bottom: 12%;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow:
-    0 0 5px 2px #ead5ff,
-    0 0 14px 5px #bd83ff;
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .lumi__particles span {
-    animation:
-      lumi-spark var(--duration) ease-out
-      var(--delay) infinite;
-  }
-}
-
-@keyframes lumi-spark {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) scale(0.4);
-  }
-
-  20% {
-    opacity: 0.9;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(var(--drift), -55px) scale(0.2);
-  }
-}
-
 .lumi__glow {
   position: absolute;
   inset: 0;
@@ -447,17 +686,13 @@ html {
   z-index: 1;
 }
 
-/* Прячем прежние точки на время настройки свечения. */
-.lumi__particles {
-  display: none;
-}
-
 .scene > .lumi {
   z-index: 2;
 }
 
 @keyframes lumi-glow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.35;
     filter: brightness(1);
   }
@@ -482,9 +717,7 @@ html {
   overflow: visible;
   z-index: 2;
   pointer-events: none;
-  filter:
-  drop-shadow(0 0 2px #ffffff)
-  drop-shadow(0 0 5px #c680ff);
+  filter: drop-shadow(0 0 2px #ffffff) drop-shadow(0 0 5px #c680ff);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -516,11 +749,15 @@ html {
 }
 
 @keyframes lumi-blink {
-  0%, 44%, 48%, 100% {
+  0%,
+  44%,
+  48%,
+  100% {
     opacity: 0;
   }
 
-  45%, 47% {
+  45%,
+  47% {
     opacity: 1;
   }
 }
@@ -569,17 +806,39 @@ html {
 }
 
 @keyframes lumi-ear-left-twitch {
-  0%, 60%, 76%, 100% { transform: rotate(0deg); }
-  64% { transform: rotate(-7deg); }
-  68% { transform: rotate(3deg); }
-  72% { transform: rotate(-2deg); }
+  0%,
+  60%,
+  76%,
+  100% {
+    transform: rotate(0deg);
+  }
+  64% {
+    transform: rotate(-7deg);
+  }
+  68% {
+    transform: rotate(3deg);
+  }
+  72% {
+    transform: rotate(-2deg);
+  }
 }
 
 @keyframes lumi-ear-right-twitch {
-  0%, 35%, 51%, 100% { transform: rotate(0deg); }
-  39% { transform: rotate(8deg); }
-  43% { transform: rotate(-3deg); }
-  47% { transform: rotate(2deg); }
+  0%,
+  35%,
+  51%,
+  100% {
+    transform: rotate(0deg);
+  }
+  39% {
+    transform: rotate(8deg);
+  }
+  43% {
+    transform: rotate(-3deg);
+  }
+  47% {
+    transform: rotate(2deg);
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -607,47 +866,62 @@ html {
   pointer-events: none;
 }
 
-/* Временно скрываем сидящую Люми, сохраняя размеры контейнера. */
-/* До нажатия показываем сидящую Люми. */
-.lumi__idle {
-  visibility: visible;
-}
-
-.lumi__walk {
-  visibility: hidden;
-  animation-play-state: paused;
-}
-
-/* После нажатия показываем кадры ходьбы. */
-.hero.is-exploring .lumi__idle {
-  visibility: hidden;
-}
-
-.hero.is-exploring .lumi__walk {
-  visibility: visible;
-}
-
 @keyframes lumi-walk-frames {
-  0%    { background-position: 0% 0%; }
-  12.5% { background-position: 33.333333% 0%; }
-  25%   { background-position: 66.666667% 0%; }
-  37.5% { background-position: 100% 0%; }
-  50%   { background-position: 0% 100%; }
-  62.5% { background-position: 33.333333% 100%; }
-  75%   { background-position: 66.666667% 100%; }
-  87.5% { background-position: 100% 100%; }
-  100%  { background-position: 0% 0%; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .lumi__walk {
-    animation: lumi-walk-frames 1.6s step-end infinite;
-    animation: lumi-walk-frames 1.6s step-end infinite paused;
+  0% {
+    background-position: 0% 0%;
+  }
+  12.5% {
+    background-position: 33.333333% 0%;
+  }
+  25% {
+    background-position: 66.666667% 0%;
+  }
+  37.5% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  62.5% {
+    background-position: 33.333333% 100%;
+  }
+  75% {
+    background-position: 66.666667% 100%;
+  }
+  87.5% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
   }
 }
 
+.lumi__idle {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 350ms ease;
+}
+
+.lumi__walk {
+  visibility: visible;
+  opacity: 0;
+  background-position: 0% 0%;
+  animation: none;
+  transition: opacity 350ms ease;
+}
+
+.hero.is-exploring .lumi__idle {
+  opacity: 0;
+}
+
 .hero.is-exploring .lumi__walk {
-  animation-play-state: running;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero.is-exploring .lumi__walk {
+    animation: lumi-walk-frames 1.6s step-end var(--departure-delay) infinite;
+  }
 }
 
 @keyframes lumi-to-portal {
@@ -686,7 +960,8 @@ html {
 
 @media (prefers-reduced-motion: no-preference) {
   .hero.is-exploring .lumi {
-    animation: lumi-to-portal 6s linear forwards;
+    animation: lumi-to-portal var(--journey-duration) linear
+      var(--departure-delay) both;
   }
 }
 
@@ -699,14 +974,15 @@ html {
 
 .lumi-footprint {
   position: absolute;
-  left: 63%;
-  top: 85%;
+  left: var(--step-x);
+  top: var(--step-y);
   width: 16px;
   height: 21px;
-  transform: rotate(25deg) scale(0.65, 0.42);
+  transform: translate(-50%, -50%) rotate(25deg) scale(0.65, 0.42)
+    scale(var(--step-scale));
   transform-origin: center;
-  opacity: 0.85;
-  filter: drop-shadow(0 0 3px #e8f4ff);
+  opacity: 0;
+  filter: drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 7px #dcecff);
 }
 
 /* Центральная подушечка лапы. */
@@ -730,32 +1006,344 @@ html {
   background: #f8fbff;
 }
 
-.lumi-footprint i:nth-child(1) { left: 0; top: 6px; }
-.lumi-footprint i:nth-child(2) { left: 4px; top: 1px; }
-.lumi-footprint i:nth-child(3) { left: 9px; top: 0; }
-.lumi-footprint i:nth-child(4) { left: 13px; top: 5px; }
-
-.lumi-footprint {
-  left: var(--step-x);
-  top: var(--step-y);
-  opacity: 0;
-  transform:
-    rotate(25deg)
-    scale(0.65, 0.42)
-    scale(var(--step-scale));
+.lumi-footprint i:nth-child(1) {
+  left: 0;
+  top: 6px;
+}
+.lumi-footprint i:nth-child(2) {
+  left: 4px;
+  top: 1px;
+}
+.lumi-footprint i:nth-child(3) {
+  left: 9px;
+  top: 0;
+}
+.lumi-footprint i:nth-child(4) {
+  left: 13px;
+  top: 5px;
 }
 
 @keyframes lumi-footprint-fade {
-  0%   { opacity: 0; }
-  12%  { opacity: 0.9; }
-  40%  { opacity: 0.7; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .hero.is-exploring .lumi-footprint {
-    animation:
-      lumi-footprint-fade 2.4s ease-out
-      var(--step-delay) both;
+    animation: lumi-footprint-fade 3.6s ease-out var(--step-delay) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal::after {
+    animation: none;
+    opacity: 0.25;
+  }
+
+  .scene,
+  .hero__copy,
+  .hero .header,
+  .hero .hero__footer,
+  .lumi__idle,
+  .lumi__walk {
+    transition: none;
+  }
+
+  .hero.is-exploring .scene {
+    transition-delay: 0s;
+  }
+
+  .hero.is-exploring .lumi {
+    animation: none;
+    opacity: 0;
+  }
+
+  .hero.is-exploring .lumi__walk {
+    animation: none;
+  }
+
+  .lumi-footprints {
+    display: none;
+  }
+}
+
+/* Светящаяся пыль за текстом. */
+.hero__copy {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero__copy > .title-dust {
+  position: absolute;
+  inset: -20px;
+  z-index: -1;
+  pointer-events: none;
+  animation: none;
+}
+
+.title-dust span {
+  position: absolute;
+  left: var(--dust-x);
+  top: var(--dust-y);
+  width: var(--dust-size);
+  height: var(--dust-size);
+  border-radius: 50%;
+  background: #f3f7ff;
+  opacity: 0;
+  box-shadow:
+    0 0 5px #ffffff,
+    0 0 12px #cbdcff;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .title-dust span {
+    animation: title-dust-float var(--dust-duration) ease-in-out
+      var(--dust-delay) infinite;
+  }
+}
+
+@keyframes title-dust-float {
+  0% {
+    opacity: 0;
+    transform: translate(-45px, 15px) scale(0.4);
+  }
+
+  20% {
+    opacity: 0.35;
+    transform: translate(-20px, -25px) scale(0.65);
+  }
+
+  45% {
+    opacity: 0.9;
+    transform: translate(45px, -10px) scale(1.2);
+  }
+
+  70% {
+    opacity: 0.65;
+    transform: translate(20px, 30px) scale(0.85);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-45px, 15px) scale(0.4);
+  }
+}
+
+/* Часть пыли вращается в обратную сторону. */
+.title-dust span:nth-child(3n) {
+  animation-direction: reverse;
+}
+
+/* Редкие яркие искры среди мелкой пыли. */
+.title-dust span:nth-child(9n) {
+  background: #ffffff;
+  box-shadow:
+    0 0 4px 1px #ffffff,
+    0 0 12px 3px #dceaff,
+    0 0 26px #b9cfff;
+}
+
+.hero__copy > .title-dust--front {
+  z-index: 1;
+}
+
+.title-dust--front span {
+  box-shadow:
+    0 0 4px #ffffff,
+    0 0 10px #dceaff;
+}
+
+/* Стая летит над долиной; каждый спрайт машет крыльями в своей фазе. */
+.magic-birds {
+  position: absolute;
+  left: 28%;
+  top: 17%;
+  width: 360px;
+  height: 240px;
+  pointer-events: none;
+}
+.magic-bird {
+  position: absolute;
+  width: 216px;
+  aspect-ratio: 1;
+}
+.magic-bird--1 {
+  left: 110px;
+  top: 0;
+  --flap-duration: 1.6s;
+  --flap-delay: -0.3s;
+}
+.magic-bird--2 {
+  left: 5px;
+  top: 45px;
+  width: 180px;
+  --flap-duration: 1.75s;
+  --flap-delay: -0.9s;
+}
+.magic-bird--3 {
+  left: -70px;
+  top: -15px;
+  width: 155px;
+  --flap-duration: 1.5s;
+  --flap-delay: -0.6s;
+}
+.magic-bird__sprite {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: url('/characters/bird-flight-v2.png') 0% 0% / 400% 200% no-repeat;
+}
+.magic-bird__trail {
+  position: absolute;
+  left: 32%;
+  top: 61%;
+  width: 1px;
+  height: 1px;
+}
+.magic-bird__trail span {
+  position: absolute;
+  width: var(--trail-size);
+  height: var(--trail-size);
+  border-radius: 50%;
+  opacity: 0;
+  background: #fff;
+  box-shadow:
+    0 0 4px #fff,
+    0 0 9px #cbdcff;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .magic-birds {
+    animation: magic-flock-flight 32s linear -4s infinite;
+  }
+  .magic-bird__sprite {
+    animation: magic-bird-flap var(--flap-duration) step-end var(--flap-delay)
+      infinite;
+  }
+  .magic-bird__trail span {
+    animation: bird-trail var(--trail-duration) linear var(--trail-delay)
+      infinite;
+  }
+}
+@keyframes magic-flock-flight {
+  0% {
+    opacity: 0;
+    transform: translate(0, 25px);
+  }
+  12% {
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(250px, -15px);
+  }
+  85% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(500px, -45px);
+  }
+}
+@keyframes magic-bird-flap {
+  0% {
+    background-position: 0% 0%;
+  }
+  12.5% {
+    background-position: 33.333333% 0%;
+  }
+  25% {
+    background-position: 66.666667% 0%;
+  }
+  37.5% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  62.5% {
+    background-position: 33.333333% 100%;
+  }
+  75% {
+    background-position: 66.666667% 100%;
+  }
+  87.5% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+@keyframes bird-trail {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  15% {
+    opacity: 0.85;
+  }
+  60% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-110px, var(--trail-drift)) scale(0.15);
+  }
+}
+
+/* Ушедший текст перестаёт попадать в навигацию с клавиатуры. */
+.hero__copy {
+  visibility: visible;
+}
+.hero.is-exploring .hero__copy {
+  visibility: hidden;
+  transition:
+    opacity 1600ms ease-in-out,
+    filter 1600ms ease-in-out,
+    visibility 0s 1600ms;
+}
+.about:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: -4px;
+}
+.about a:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: 6px;
+}
+
+/* Этот блок в конце: специфичные правила путешествия не перекрывают настройку. */
+@media (prefers-reduced-motion: reduce) {
+  .hero *,
+  .hero *::before,
+  .hero *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .hero.is-exploring .scene {
+    transform: translate(-50%, -50%);
+  }
+  .lumi__magic,
+  .lumi-footprints,
+  .magic-bird__trail,
+  .title-dust {
+    display: none;
+  }
+  .magic-cursor__dot,
+  .magic-cursor__ring {
+    transition: none;
+  }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .hero.is-exploring .scene {
+    transform: translate(-75.5%, -50%);
   }
 }
