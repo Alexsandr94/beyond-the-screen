@@ -6,6 +6,9 @@ import Observatory from "./components/Observatory";
 import ObservatoryTransition from "./components/ObservatoryTransition";
 import PortalTransition from "./components/PortalTransition";
 
+import Sanctuary from "./components/Sanctuary";
+import SanctuaryTransition from "./components/SanctuaryTransition";
+
 const JOURNEY_SECONDS = 6;
 const DEPARTURE_SECONDS = 0.35;
 
@@ -68,6 +71,31 @@ export default function App() {
     setShowObservatoryTransition(true);
   }
 
+  const [showSanctuaryTransition, setShowSanctuaryTransition] = useState(false);
+  const sanctuaryTransitionRef = useRef(false);
+  const revealSanctuary = useCallback(() => {
+    document
+      .getElementById("sanctuary")
+      ?.scrollIntoView({ behavior: "instant", block: "start" });
+  }, []);
+  const finishSanctuaryTransition = useCallback(() => {
+    sanctuaryTransitionRef.current = false;
+    setShowSanctuaryTransition(false);
+    document.getElementById("sanctuary")?.focus({ preventScroll: true });
+  }, []);
+  function enterSanctuary(event) {
+    event.preventDefault();
+    if (sanctuaryTransitionRef.current) return;
+    hideCursor();
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealSanctuary();
+      finishSanctuaryTransition();
+      return;
+    }
+    sanctuaryTransitionRef.current = true;
+    setShowSanctuaryTransition(true);
+  }
+
   // Прокручиваем под непрозрачным слоем: посетитель не видит скачка страницы.
   const revealWorkshop = useCallback(() => {
     document.getElementById("about")?.scrollIntoView({
@@ -87,7 +115,7 @@ export default function App() {
   useEffect(() => {
     // Начинаем загрузку фона заранее, во время просмотра первого экрана.
     const image = new Image();
-    image.src = "/transitions/between-worlds.png";
+    image.src = "/workshop/background.png";
   }, []);
 
   function hideCursor() {
@@ -269,17 +297,36 @@ export default function App() {
       "is-hovering",
       Boolean(interactive),
     );
+    const dot = cursorDotRef.current;
+    const ring = cursorRingRef.current;
+    if (!dot || !ring) return;
+    // Точка следует за мышью без задержки; кольцо догоняет её по кадрам.
+    const place = (element, x, y) => {
+      element.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+      element.style.opacity = "1";
+    };
+    place(dot, event.clientX, event.clientY);
+    const first = !mainRef.current?.classList.contains("has-magic-cursor");
+    mainRef.current?.classList.add("has-magic-cursor");
+    if (first) {
+      ring.dataset.x = String(event.clientX);
+      ring.dataset.y = String(event.clientY);
+    }
     if (cursorFrameRef.current !== null) return;
-    cursorFrameRef.current = requestAnimationFrame(() => {
-      cursorFrameRef.current = null;
-      const { x, y } = cursorPositionRef.current;
-      for (const element of [cursorDotRef.current, cursorRingRef.current]) {
-        if (!element) continue;
-        element.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
-        element.style.opacity = "1";
-      }
-      mainRef.current?.classList.add("has-magic-cursor");
-    });
+    let previous = performance.now();
+    function tick(now) {
+      const target = cursorPositionRef.current;
+      const amount = 1 - Math.exp(-Math.min(now - previous, 64) / 55);
+      previous = now;
+      const x = Number(ring.dataset.x) + (target.x - Number(ring.dataset.x)) * amount;
+      const y = Number(ring.dataset.y) + (target.y - Number(ring.dataset.y)) * amount;
+      ring.dataset.x = String(x);
+      ring.dataset.y = String(y);
+      place(ring, x, y);
+      cursorFrameRef.current = Math.hypot(target.x - x, target.y - y) > 0.1
+        ? requestAnimationFrame(tick) : null;
+    }
+    cursorFrameRef.current = requestAnimationFrame(tick);
   }
 
   return (
@@ -498,7 +545,15 @@ export default function App() {
       </section>
 
       <Workshop onReturn={handleReturn} onContinue={enterObservatory} />
-      <Observatory />
+      <Observatory onContinue={enterSanctuary} />
+      <Sanctuary />
+      {showSanctuaryTransition && (
+        <SanctuaryTransition
+          pageRef={mainRef}
+          onCovered={revealSanctuary}
+          onComplete={finishSanctuaryTransition}
+        />
+      )}
       {showObservatoryTransition && (
         <ObservatoryTransition
           pageRef={mainRef}

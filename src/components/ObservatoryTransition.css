@@ -165,3 +165,308 @@
     transition: none !important;
   }
 }
+
+/* Первая часть: согласованная панорама с отдельными слоями. */
+.composite-passage {
+  --pan-x: 0px;
+  --pan-y: 0px;
+}
+.composite-passage,
+.composite-passage * {
+  box-sizing: border-box;
+}
+.passage-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px !important;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.passage-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: radial-gradient(ellipse at 32% 50%, #4a321a, #070e1e 65%);
+  font: 12px/1.6 var(--font-title, Arial, sans-serif);
+  letter-spacing: 0.12em;
+}
+.passage-loading > span {
+  color: #f1d7a8;
+  font-size: 40px;
+  animation: panorama-light 1.4s ease-in-out infinite alternate;
+}
+.panorama {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 800ms ease-in-out;
+}
+.panorama__camera {
+  position: absolute;
+  inset: 0;
+  transform-origin: 69% 36%;
+  animation: panorama-camera 6400ms cubic-bezier(0.45, 0, 0.5, 1) both;
+}
+.panorama__canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(106vw, 188.35svh);
+  aspect-ratio: 1672/941;
+  transform: translate(-50%, -50%);
+}
+.panorama__far,
+.panorama__rings,
+.panorama__near,
+.panorama__cards,
+.panorama__dust {
+  position: absolute;
+  inset: 0;
+}
+.panorama img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.panorama__far {
+  transform: translate(calc(var(--pan-x) * -0.18), calc(var(--pan-y) * -0.18));
+}
+.panorama__rings {
+  transform: translate(calc(var(--pan-x) * -0.6), calc(var(--pan-y) * -0.6));
+}
+.panorama__rings img {
+  transform-origin: 69% 36%;
+  animation: panorama-orbit 14s linear infinite;
+}
+.panorama__near {
+  transform: translate(calc(var(--pan-x) * -1.1), calc(var(--pan-y) * -1.1));
+}
+.panorama__near > img {
+  transform-origin: 52% 82%;
+  animation: panorama-breathe 5.5s ease-in-out infinite alternate;
+}
+.panorama__cards {
+  transform: translate(calc(var(--pan-x) * -0.8), calc(var(--pan-y) * -0.8));
+}
+.panorama__card {
+  position: absolute;
+  width: 5.3%;
+  aspect-ratio: 1.3;
+  padding: 0.6%;
+  border: 1px solid #ffe4a8a8;
+  background: #e0cb9a55;
+  box-shadow: 0 0 14px #ffd58a45;
+  opacity: 0.85;
+  transform: rotate(var(--turn));
+  animation: panorama-card var(--duration) ease-in-out var(--delay) infinite;
+}
+.panorama__card i {
+  display: block;
+  height: 58%;
+  background:
+    linear-gradient(#ffd69e35, #ffd69e35),
+    url("/observatory/observatory-sky.png") center/cover;
+  filter: sepia(0.7);
+}
+.panorama__card span {
+  display: block;
+  height: 2px;
+  margin-top: 8%;
+  width: 75%;
+  background: #fff5dca3;
+}
+.panorama__card b {
+  display: block;
+  float: right;
+  margin-top: 8%;
+  width: 15%;
+  height: 3px;
+  background: #fff5dc;
+}
+.panorama__dust {
+  transform: translate(calc(var(--pan-x) * -1.55), calc(var(--pan-y) * -1.55));
+}
+.panorama__dust i {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: #ffedc4;
+  box-shadow: 0 0 8px #ffe2a5;
+  animation: panorama-spark 4s ease-in-out var(--delay) infinite;
+}
+.panorama__dust i:nth-child(3n) {
+  background: #d3efff;
+  box-shadow: 0 0 9px #a4dfff;
+}
+.panorama__clouds {
+  position: absolute;
+  right: -5%;
+  bottom: 8%;
+  width: 63%;
+  height: 40%;
+  background:
+    radial-gradient(ellipse at 25% 60%, #cedcff22, transparent 55%),
+    radial-gradient(ellipse at 70% 70%, #d6eaff2a, transparent 60%);
+  filter: blur(12px);
+  animation: panorama-cloud 9s ease-in-out infinite alternate;
+}
+.panorama__tail-glow {
+  position: absolute;
+  left: 39%;
+  top: 73%;
+  width: 15%;
+  height: 18%;
+  background: radial-gradient(ellipse, #fff0ce4d, transparent 65%);
+  mix-blend-mode: screen;
+  animation: panorama-light 1.8s ease-in-out infinite alternate;
+}
+.panorama__chapter {
+  position: absolute;
+  left: 3%;
+  bottom: 26px;
+  margin: 0;
+  padding: 12px 18px;
+  border-radius: 25px;
+  color: #f7e0b4;
+  background: #07101bc4;
+  font: 20px/1.5 var(--font-display, Georgia, serif);
+  z-index: 5;
+}
+.panorama__chapter span {
+  margin: 0 10px;
+}
+.orbit-passage__second {
+  position: absolute;
+  inset: 0;
+  background: #070e1e;
+  animation: panorama-crossfade 800ms ease-in-out both;
+}
+.phase-orbit .panorama,
+.phase-reveal .panorama {
+  opacity: 0;
+}
+.composite-passage .orbit-passage__skip {
+  z-index: 6;
+}
+.composite-passage .orbit-passage__fragments i {
+  animation-duration: 2200ms;
+}
+.composite-passage.is-paused * {
+  animation-play-state: paused !important;
+}
+@keyframes panorama-camera {
+  0% {
+    transform: scale(1);
+  }
+  78.125% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: scale(1.55);
+  }
+}
+@keyframes panorama-crossfade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes panorama-orbit {
+  from {
+    transform: rotate(-2deg);
+  }
+  to {
+    transform: rotate(6deg);
+  }
+}
+@keyframes panorama-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.003);
+  }
+}
+@keyframes panorama-card {
+  0% {
+    opacity: 0;
+    translate: -12px 38px;
+    scale: 0.85;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    translate: 20px -70px;
+    scale: 0.6;
+  }
+}
+@keyframes panorama-spark {
+  0%,
+  100% {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  35% {
+    opacity: 0.95;
+  }
+  85% {
+    opacity: 0.4;
+    translate: 18px -28px;
+  }
+}
+@keyframes panorama-cloud {
+  from {
+    translate: -15px 5px;
+  }
+  to {
+    translate: 30px -12px;
+  }
+}
+@keyframes panorama-light {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-aspect-ratio: 1/1) {
+  .panorama__canvas {
+    left: 63%;
+    transform: translate(-63%, -50%);
+  }
+  .panorama__camera {
+    transform-origin: 70% 40%;
+  }
+  .panorama__chapter {
+    font-size: 16px;
+    left: 16px;
+    bottom: 24px;
+  }
+  .composite-passage .orbit-passage__skip {
+    right: 16px;
+    bottom: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .composite-passage,
+  .composite-passage * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

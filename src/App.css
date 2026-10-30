@@ -1347,3 +1347,10 @@ html {
     transform: translate(-75.5%, -50%);
   }
 }
+
+/* Один курсор также над ползунками и полями. */
+@media (hover: hover) and (pointer: fine) {
+  main.has-magic-cursor input, main.has-magic-cursor select,
+  main.has-magic-cursor textarea, main.has-magic-cursor [role="button"] { cursor: none; }
+  .magic-cursor__dot, .magic-cursor__ring { will-change: transform; }
+}

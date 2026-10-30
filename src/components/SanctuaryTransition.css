@@ -1,0 +1,408 @@
+.sanctuary-passage {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  isolation: isolate;
+  overflow: hidden;
+  background: #080e1e;
+  color: #f9edda;
+  cursor: auto;
+  touch-action: none;
+  animation: sanctuary-cover 240ms ease-out both;
+  transition: opacity 800ms ease-in-out;
+}
+.sanctuary-passage,
+.sanctuary-passage * {
+  box-sizing: border-box;
+}
+.sanctuary-passage.is-revealing {
+  animation: none;
+  opacity: 0;
+}
+.sanctuary-passage__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.sanctuary-passage__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: radial-gradient(ellipse at 75% 40%, #443124, #080e1e 65%);
+  font: 12px/1.6 var(--font-title, Arial, sans-serif);
+  letter-spacing: 0.1em;
+}
+.sanctuary-passage__loading span {
+  font-size: 40px;
+  color: #eed8b4;
+  animation: sanctuary-light 1.4s ease-in-out infinite alternate;
+}
+.sanctuary-panorama {
+  --pan-x: 0px;
+  --pan-y: 0px;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 800ms ease-in-out;
+}
+.sanctuary-panorama__camera {
+  position: absolute;
+  inset: 0;
+  transform-origin: 77% 33%;
+  animation: sanctuary-camera 6400ms cubic-bezier(0.45, 0, 0.5, 1) both;
+}
+.sanctuary-panorama__canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(106vw, 188.35svh);
+  aspect-ratio: 1672/941;
+  transform: translate(-50%, -50%);
+}
+.sanctuary-panorama img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.sanctuary-panorama__far,
+.sanctuary-panorama__portal,
+.sanctuary-panorama__near,
+.sanctuary-panorama__dust {
+  position: absolute;
+  inset: 0;
+}
+.sanctuary-panorama__far {
+  transform: translate(calc(var(--pan-x) * -0.18), calc(var(--pan-y) * -0.18));
+}
+.sanctuary-panorama__portal {
+  transform: translate(calc(var(--pan-x) * -0.58), calc(var(--pan-y) * -0.58));
+}
+.sanctuary-panorama__near {
+  transform: translate(calc(var(--pan-x) * -1.1), calc(var(--pan-y) * -1.1));
+}
+.sanctuary-panorama__portal-light {
+  position: absolute;
+  left: 62%;
+  top: -4%;
+  width: 30%;
+  height: 62%;
+  border-radius: 50%;
+  transform: rotate(12deg);
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    ellipse,
+    #ffe3a81c 40%,
+    #ffe3a866 64%,
+    transparent 73%
+  );
+  filter: blur(8px);
+  animation: sanctuary-light 1.6s ease-in-out infinite alternate;
+}
+.sanctuary-panorama__tail-light {
+  position: absolute;
+  left: 38%;
+  top: 53%;
+  width: 29%;
+  height: 24%;
+  background: radial-gradient(ellipse, #dceaff55, transparent 65%);
+  transform: rotate(-25deg);
+  mix-blend-mode: screen;
+  animation: sanctuary-light 1.8s ease-in-out -0.6s infinite alternate;
+}
+.sanctuary-panorama__dust {
+  transform: translate(calc(var(--pan-x) * -1.55), calc(var(--pan-y) * -1.55));
+}
+.sanctuary-panorama__dust i,
+.sanctuary-title__dust i {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: #e4edff;
+  box-shadow: 0 0 8px #ccdfff;
+  animation: sanctuary-spark 5s ease-in-out var(--delay) infinite;
+}
+.sanctuary-panorama__dust i:nth-child(3n) {
+  background: #fff0c6;
+  box-shadow: 0 0 9px #ffda99;
+}
+.sanctuary-panorama__copy {
+  position: absolute;
+  left: 6%;
+  top: 32%;
+  width: 43%;
+  text-shadow: 0 2px 24px #030711;
+}
+.sanctuary-panorama__copy p {
+  font: 10px/1.6 var(--font-title, Arial, sans-serif);
+  letter-spacing: 0.4em;
+  margin: 0 0 20px;
+}
+.sanctuary-panorama__copy h2 {
+  font: 400 clamp(30px, 4vw, 68px)/1.15 var(--font-display, Georgia, serif);
+  margin: 0;
+}
+.phase-approach .sanctuary-panorama__copy {
+  opacity: 0;
+  transition: opacity 600ms;
+}
+.phase-title .sanctuary-panorama,
+.phase-reveal .sanctuary-panorama {
+  opacity: 0;
+}
+.sanctuary-title {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #110f13;
+  animation: sanctuary-cover 800ms ease-in-out both;
+}
+.sanctuary-title__background {
+  position: absolute;
+  inset: -3%;
+  background:
+    linear-gradient(#120d1638, #080b1440),
+    url("/transitions/sanctuary/title-background.png") center/cover;
+  animation: sanctuary-title-drift 3200ms ease-out both;
+}
+.sanctuary-title__sigil {
+  position: absolute;
+  width: min(74vh, 650px);
+  max-width: 90vw;
+  height: auto;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  stroke: #e3bc75;
+  stroke-width: 0.8;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px #c7904c55);
+}
+.sanctuary-title__orbit {
+  transform-origin: 300px 300px;
+  animation: sanctuary-sigil 35s linear infinite;
+}
+.sanctuary-title__copy {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 48%;
+  transform: translateY(-50%);
+  text-align: center;
+  text-shadow:
+    0 2px 18px #080a10,
+    0 0 35px #080a10;
+  animation: sanctuary-words 1100ms ease-out both;
+}
+.sanctuary-title__copy > p {
+  font: 12px/1.6 var(--font-title, Arial, sans-serif);
+  letter-spacing: 0.35em;
+  margin: 0 0 14px;
+}
+.sanctuary-title__copy h2 {
+  font: 400 clamp(42px, 7.2vw, 110px)/1.12 var(--font-display, Georgia, serif);
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: #ffe3af;
+}
+.sanctuary-title__rule {
+  display: block;
+  width: min(400px, 65vw);
+  margin: 18px auto;
+  color: #e8c68d;
+  font-size: 15px;
+  background: linear-gradient(
+      90deg,
+      transparent,
+      #d7ad6080 42%,
+      transparent 43%,
+      transparent 57%,
+      #d7ad6080 58%,
+      transparent
+    )
+    center/100% 1px no-repeat;
+}
+.sanctuary-title__copy em {
+  font: italic clamp(17px, 2vw, 28px)/1.5 var(--font-display, Georgia, serif);
+}
+.sanctuary-title__dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sanctuary-title__dust i {
+  background: #ffe3ad;
+  box-shadow: 0 0 8px #ffcb76;
+}
+.sanctuary-passage__skip {
+  position: absolute;
+  z-index: 6;
+  right: max(3vw, 20px);
+  bottom: 28px;
+  min-height: 44px;
+  padding: 12px 24px;
+  border: 1px solid #e4d3b766;
+  border-radius: 30px;
+  color: #fff0d5;
+  background: #0a101bca;
+  cursor: pointer;
+  font: 13px/1.5 var(--font-title, Arial, sans-serif);
+}
+.sanctuary-passage__skip:hover {
+  background: #342a21;
+}
+.sanctuary-passage__skip:focus-visible {
+  outline: 2px solid #fff0d5;
+  outline-offset: 5px;
+}
+.sanctuary-passage.is-paused * {
+  animation-play-state: paused !important;
+}
+@keyframes sanctuary-cover {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sanctuary-camera {
+  0% {
+    transform: scale(1);
+  }
+  78.125% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: scale(1.55);
+  }
+}
+@keyframes sanctuary-light {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 0.95;
+  }
+}
+@keyframes sanctuary-spark {
+  0%,
+  100% {
+    opacity: 0;
+    translate: 0 16px;
+  }
+  35% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.4;
+    translate: 18px -28px;
+  }
+}
+@keyframes sanctuary-sigil {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes sanctuary-title-drift {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.045);
+  }
+}
+@keyframes sanctuary-words {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@media (max-aspect-ratio: 1/1) {
+  .sanctuary-panorama__canvas {
+    left: 72%;
+    transform: translate(-72%, -50%);
+  }
+  .sanctuary-panorama__camera {
+    transform-origin: 75% 35%;
+  }
+  .sanctuary-panorama__copy {
+    left: 7%;
+    top: auto;
+    bottom: 17%;
+    width: 86%;
+  }
+  .sanctuary-panorama__copy::before {
+    content: "";
+    position: absolute;
+    inset: -35px -10vw -20vh;
+    z-index: -1;
+    background: linear-gradient(transparent, #060c1bd9 40%);
+  }
+  .sanctuary-panorama__copy h2 {
+    font-size: clamp(28px, 8vw, 42px);
+  }
+  .sanctuary-title__sigil {
+    width: 110vw;
+    max-width: none;
+  }
+  .sanctuary-title__copy {
+    left: 6%;
+    right: 6%;
+  }
+  .sanctuary-title__copy h2 {
+    font-size: clamp(38px, 11vw, 64px);
+  }
+  .sanctuary-title__copy p {
+    font-size: 10px;
+  }
+  .sanctuary-title__background {
+    background-position: 55% center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sanctuary-passage,
+  .sanctuary-passage * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.sanctuary-panorama__camera {
+  transform-origin: 60% 45%;
+}
+.sanctuary-panorama__copy {
+  top: auto;
+  bottom: 13%;
+  width: 54%;
+  padding: 20px;
+  background: linear-gradient(90deg, #10172999, transparent);
+}
+.sanctuary-panorama__copy h2 {
+  font-size: clamp(27px, 3.2vw, 52px);
+}
+.sanctuary-title__sigil {
+  stroke: #e0efff;
+}
+@media (max-aspect-ratio: 1/1) {
+  .sanctuary-panorama__canvas {
+    left: 59%;
+    transform: translate(-59%, -50%);
+  }
+  .sanctuary-panorama__copy {
+    width: 90%;
+    left: 5%;
+    bottom: 14%;
+  }
+}

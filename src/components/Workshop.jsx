@@ -1,38 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import Lumi from "./Lumi";
+import { EMPTY_IDEA, ELEMENTS, readIdea, writeIdea } from "./worldIdea";
 import "./Workshop.css";
-
-const OBJECTS = [
-  {
-    id: "html",
-    title: "HTML",
-    subtitle: "Structure",
-    image: "html-crystal.png",
-    number: 1,
-  },
-  {
-    id: "css",
-    title: "CSS",
-    subtitle: "Style",
-    image: "css-palette.png",
-    number: 2,
-  },
-  {
-    id: "js",
-    title: "JavaScript",
-    subtitle: "Interaction",
-    image: "js-orb.png",
-    number: 3,
-  },
+const TOOLS = [
+ {id:'html',name:'HTML',label:'Structure',image:'html-crystal.png'},
+ {id:'css',name:'CSS',label:'Style',image:'css-palette.png'},
+ {id:'js',name:'JavaScript',label:'Behaviour',image:'js-orb.png'},
 ];
-const THEMES = ["lavender", "ocean", "sunset"];
-const EXPLANATIONS = [
-  "Start with the blue crystal. Give your idea a structure, a style and a little life.",
-  "HTML gives a page its structure: a heading, some content and a button. Now choose the palette.",
-  "CSS shapes how a page looks. Click the palette again to try another colour, then activate the golden sphere.",
-  "JavaScript makes a page respond. Try the button in your little website — you have built something interactive.",
+const THEMES = [
+ {id:'moon',name:'Moonlight',color:'#d5bfff'},
+ {id:'forest',name:'Enchanted forest',color:'#9ee5c3'},
+ {id:'sun',name:'Golden hour',color:'#ffd19a'},
 ];
-
+const LABELS = {heading:'Heading',text:'Description',button:'Button'};
+const TAGS = {heading:'<h1>Hello, new world.</h1>',text:'<p>A little idea. A place to grow.</p>',button:'<button>Awaken my idea</button>'};
+const COPY = {
+ html:['Give your world a shape.','Add three HTML elements. Each tag creates a different part of the page.'],
+ css:['Give your world a feeling.','Choose a theme. CSS changes the appearance; your content stays the same.'],
+ js:['Give your world a little magic.','Connect an action, then try the button inside your creation.'],
+};
 // Координаты храним в ref: движение мыши не перерисовывает React-компонент.
 function useWorkshopParallax(sectionRef, stageRef) {
   useEffect(() => {
@@ -160,232 +146,84 @@ function useWorkshopParallax(sectionRef, stageRef) {
 }
 
 export default function Workshop({ onReturn, onContinue }) {
-  const sectionRef = useRef(null);
-  const stageRef = useRef(null);
-  const [step, setStep] = useState(0);
-  const [selected, setSelected] = useState(null);
-  const [theme, setTheme] = useState(0);
-  const [opened, setOpened] = useState(false);
-  const [round, setRound] = useState(0);
-  useWorkshopParallax(sectionRef, stageRef);
-
-  function activate(item) {
-    if (item.number > step + 1) return;
-    setSelected(item.id);
-    if (item.id === "css" && step >= 2)
-      setTheme((value) => (value + 1) % THEMES.length);
-    setStep((value) => Math.max(value, item.number));
-  }
-  function reset() {
-    setStep(0);
-    setSelected(null);
-    setTheme(0);
-    setOpened(false);
-    setRound((value) => value + 1);
-  }
-
-  return (
-    <section
-      className="workshop workshop--paused"
-      id="about"
-      aria-labelledby="workshop-title"
-      tabIndex={-1}
-      ref={sectionRef}
-    >
-      <div className="workshop__copy">
-        <p className="workshop__eyebrow">02 — The Workshop</p>
-        <h2 id="workshop-title">
-          Ideas become
-          <br />
-          <em>experiences.</em>
-        </h2>
-        <p className="workshop__intro">
-          I’m Alexander, an IT student and an aspiring frontend developer. I’m
-          learning how design, code and interaction work together.
-        </p>
-        <p className="workshop__goal">
-          My goal is to create websites that are clear, useful and exciting to
-          explore.
-        </p>
-        <div className="workshop__instruction">
-          <span className="workshop__instruction-label">
-            Build a little world
-          </span>
-          <p aria-live="polite" aria-atomic="true">
-            {EXPLANATIONS[step]}
-          </p>
-          <div
-            className="workshop__progress"
-            aria-label={`${step} of 3 steps completed`}
-          >
-            {[1, 2, 3].map((number) => (
-              <span
-                key={number}
-                className={step >= number ? "is-complete" : ""}
-                aria-hidden="true"
-              />
-            ))}
-          </div>
-          <button
-            type="button"
-            className="workshop__reset"
-            onClick={reset}
-            disabled={step === 0}
-          >
-            Start again <span aria-hidden="true">↺</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="workshop__scene">
-        <div className="workshop__stage" ref={stageRef}>
-          <img
-            className="workshop__layer workshop__landscape"
-            src="/workshop/01-landscape.png"
-            alt=""
-            decoding="async"
-            draggable={false}
-          />
-          <img
-            className="workshop__layer workshop__room"
-            src="/workshop/02-room.png"
-            alt=""
-            decoding="async"
-            draggable={false}
-          />
-          <div className="workshop__dust" aria-hidden="true">
-            {Array.from({ length: 30 }, (_, index) => (
-              <span
-                key={index}
-                style={{
-                  "--dx": `${(index * 31) % 100}%`,
-                  "--dy": `${(index * 47) % 100}%`,
-                  "--duration": `${10 + (index % 7)}s`,
-                  "--delay": `${-index * 0.9}s`,
-                }}
-              />
-            ))}
-          </div>
-          <img
-            className="workshop__layer workshop__table"
-            src="/workshop/03-table.png"
-            alt=""
-            decoding="async"
-            draggable={false}
-          />
-          <Lumi className="workshop__lumi" />
-
-          <div className="workshop__preview-anchor">
-            <div
-              className={`workshop__preview theme-${THEMES[theme]} ${step >= 2 ? "is-styled" : ""} ${step === 3 ? "is-alive" : ""}`}
-            >
-              <div className="workshop__preview-bar">
-                <span />
-                <span />
-                <span />
-                <span className="workshop__preview-caption">
-                  Your little world
-                </span>
-              </div>
-              {step === 0 ? (
-                <div className="workshop__empty">
-                  <span aria-hidden="true">✧</span>
-                  <p>
-                    Every creation starts
-                    <br />
-                    with an idea.
-                  </p>
-                </div>
-              ) : (
-                <div className="workshop__mini-site">
-                  <div className="workshop__mini-art" aria-hidden="true">
-                    <span>✦</span>
-                  </div>
-                  <p className="workshop__mini-label">A new beginning</p>
-                  <h3>Hello, new world.</h3>
-                  <p>A little idea. A place to grow.</p>
-                  <button
-                    type="button"
-                    disabled={step < 3}
-                    aria-expanded={opened}
-                    aria-controls="workshop-mini-message"
-                    onClick={() => setOpened((value) => !value)}
-                  >
-                    {opened ? "Close the discovery" : "Make something happen"}{" "}
-                    <span aria-hidden="true">↗</span>
-                  </button>
-                  <p
-                    id="workshop-mini-message"
-                    className="workshop__mini-message"
-                    hidden={!opened}
-                  >
-                    You brought this little world to life.
-                  </p>
-                </div>
-              )}
-              {step === 3 && (
-                <div
-                  className="workshop__completion"
-                  key={round}
-                  aria-hidden="true"
-                >
-                  {Array.from({ length: 12 }, (_, index) => (
-                    <i
-                      key={index}
-                      style={{
-                        "--angle": `${index * 30}deg`,
-                        "--burst-delay": `${(index % 3) * 0.05}s`,
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div
-            className="workshop__objects"
-            role="group"
-            aria-label="Build your website in three steps"
-          >
-            {OBJECTS.map((item) => (
-              <button
-                type="button"
-                key={item.id}
-                className={`workshop__object workshop__object--${item.id} ${step >= item.number ? "is-activated" : ""} ${selected === item.id ? "is-selected" : ""}`}
-                onClick={() => activate(item)}
-                disabled={item.number > step + 1}
-                aria-pressed={selected === item.id}
-                aria-label={`${item.title}: ${item.subtitle}${item.id === "css" && step >= 2 ? ". Click to change colour" : ""}`}
-              >
-                <span className="workshop__object-halo" aria-hidden="true" />
-                <img
-                  src={`/workshop/${item.image}`}
-                  alt=""
-                  decoding="async"
-                  draggable={false}
-                />
-                <span className="workshop__object-label">
-                  <strong>{item.title}</strong>
-                  <small>{item.subtitle}</small>
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="workshop__shade" aria-hidden="true" />
-      <footer className="workshop__footer">
-        <a href="#top" onClick={onReturn}>
-          ← Back to the portal
-        </a>
-        <a href="#observatory" onClick={onContinue}>
-          Enter the observatory ↗
-        </a>
-        <span>
-          02 / 04 <span aria-hidden="true">—</span> The Workshop
-        </span>
-      </footer>
-    </section>
-  );
+ const sectionRef=useRef(null), stageRef=useRef(null), timerRef=useRef(null);
+ const [idea,setIdea]=useState(readIdea), [tool,setTool]=useState('html');
+ const [highlight,setHighlight]=useState('heading');
+ const [withoutCSS,setWithoutCSS]=useState(false), [withoutJS,setWithoutJS]=useState(false);
+ const [playing,setPlaying]=useState(false), [run,setRun]=useState(0);
+ const [saved,setSaved]=useState(true);
+ const [message,setMessage]=useState('Start with HTML. Add a heading to your world.');
+ const full=idea.elements.length===3, styled=idea.styled&&!withoutCSS;
+ const accent=THEMES.find(t=>t.id===idea.theme).color;
+ useWorkshopParallax(sectionRef,stageRef);
+ useEffect(()=>{setSaved(writeIdea(idea));},[idea]);
+ useEffect(()=>()=>clearTimeout(timerRef.current),[]);
+ function stop(){clearTimeout(timerRef.current);setPlaying(false);}
+ function add(name){
+  setHighlight(name);
+  setIdea(old=>({...old,elements:ELEMENTS.filter(n=>n===name||old.elements.includes(n))}));
+  setMessage(`${LABELS[name]} selected. Notice its tag and the matching element in your creation.`);
+ }
+ function theme(id){stop();setWithoutCSS(false);setIdea(old=>({...old,theme:id,styled:true}));setMessage('Style applied! Remove CSS below to compare the same HTML without this design.');}
+ function launch(){
+  if(!idea.wired||withoutJS){setMessage(withoutJS?'JavaScript is off in the demo. The button looks the same, but its action does not run.':'This is an HTML button. Open JavaScript and connect an action to make it respond.');return;}
+  stop();setRun(n=>n+1);setPlaying(true);setIdea(old=>({...old,completed:true}));
+  setMessage(idea.action==='portal'?'Your portal opened! JavaScript responded to your click.':'Your stars connected! JavaScript responded to your click.');
+  timerRef.current=setTimeout(()=>setPlaying(false),matchMedia('(prefers-reduced-motion: reduce)').matches?1500:4200);
+ }
+ function reset(){stop();setIdea({...EMPTY_IDEA,elements:[]});setTool('html');setWithoutCSS(false);setWithoutJS(false);setHighlight('heading');setMessage('A fresh beginning. Add your first HTML element.');}
+ const done=[full,idea.styled,idea.completed];
+ return <section id="about" className="workshop workshop--paused" ref={sectionRef} tabIndex={-1} aria-labelledby="workshop-title" style={{'--idea-accent':accent}}>
+  <div className="workshop__scene" aria-hidden="true"><div className="workshop__stage" ref={stageRef}>
+   <img className="workshop__layer workshop__landscape" src="/workshop/01-landscape.png" alt=""/>
+   <img className="workshop__layer workshop__room" src="/workshop/02-room.png" alt=""/>
+   <img className="workshop__layer workshop__table" src="/workshop/03-table.png" alt=""/>
+   <div className="workshop__dust">{Array.from({length:24},(_,i)=><i key={i} style={{left:`${i*37%100}%`,top:`${i*53%100}%`,'--delay':`${-i*.7}s`}}/>)}</div>
+  </div></div><div className="workshop__shade" aria-hidden="true"/>
+  <header className="workshop__heading"><div><p className="workshop__eyebrow">02 — The Workshop</p><h2 id="workshop-title">Build a little <em>world.</em></h2></div><p>I’m Alexander, an aspiring frontend developer.<br/>Explore the three tools behind an interactive website.</p></header>
+  <div className="workshop__layout">
+   <div className="workshop__lesson">
+    <nav className="workshop__steps" aria-label="Choose a web technology">{TOOLS.map((t,i)=><button type="button" key={t.id} aria-pressed={tool===t.id} onClick={()=>setTool(t.id)}><span aria-hidden="true">{done[i]?'✓':`0${i+1}`}</span>{t.name}</button>)}</nav>
+    <div className="workshop__lesson-body"><p className="workshop__kicker">{TOOLS.find(t=>t.id===tool).label}</p><h3>{COPY[tool][0]}</h3><p className="workshop__explanation">{COPY[tool][1]}</p>
+     {tool==='html'&&<>
+      <div className="workshop__choices">{ELEMENTS.map(name=><button type="button" key={name} aria-pressed={idea.elements.includes(name)} onClick={()=>add(name)}>{idea.elements.includes(name)?'✓':'+'} {LABELS[name]}</button>)}</div>
+      <div className="workshop__code" aria-label="HTML for your creation">{ELEMENTS.map(name=><code key={name} className={highlight===name?'is-selected':''}>{idea.elements.includes(name)?TAGS[name]:`<!-- Add ${LABELS[name].toLowerCase()} -->`}</code>)}</div>
+      <p className="workshop__hint">HTML names the parts. CSS styles them. JavaScript connects their behaviour.</p>
+      {full&&<button type="button" className="workshop__next" onClick={()=>setTool('css')}>Next: style with CSS →</button>}
+     </>}
+     {tool==='css'&&<>
+      {!full&&<p className="workshop__requirement">First add all three elements in HTML.</p>}
+      <div className="workshop__themes" role="group" aria-label="Choose a theme">{THEMES.map(t=><button type="button" key={t.id} disabled={!full} aria-pressed={idea.styled&&idea.theme===t.id} onClick={()=>theme(t.id)}><span style={{background:t.color}}/>{t.name}</button>)}</div>
+      <pre className="workshop__code"><code>{`/* Part of your theme */\n.card {\n  color: ${accent};\n  border-radius: 20px;\n}`}</code></pre>
+      <p className="workshop__hint">Colours, spacing, typography and button shapes are CSS. Try “Remove CSS” to see the difference.</p>
+      {idea.styled&&<button type="button" className="workshop__next" onClick={()=>setTool('js')}>Next: connect JavaScript →</button>}
+     </>}
+     {tool==='js'&&<>
+      {!full&&<p className="workshop__requirement">First add all three elements in HTML.</p>}
+      <div className="workshop__choices" role="group" aria-label="Choose an action">{['portal','stars'].map(action=><button type="button" key={action} disabled={!full} aria-pressed={idea.action===action} onClick={()=>{stop();setIdea(old=>({...old,action,wired:false,completed:false}));setMessage('Action selected. Connect it to your button.');}}>{action==='portal'?'◉ Open a portal':'✧ Connect stars'}</button>)}</div>
+      <pre className="workshop__code"><code>{`// Simplified example\nbutton.addEventListener("click", () => {\n  ${idea.action==='portal'?'openPortal':'connectStars'}();\n});`}</code></pre>
+      <button type="button" className="workshop__next" disabled={!full||idea.wired} onClick={()=>{setIdea(old=>({...old,wired:true}));setWithoutJS(false);setMessage('Connected! Press “Awaken my idea” inside your creation.');}}>{idea.wired?'✓ Connected — try your button':'Connect action to button'}</button>
+      <p className="workshop__hint">An event listener waits for a click, then calls a function. Switch JavaScript off and try again.</p>
+     </>}
+    </div>
+    <p className="workshop__feedback" role="status" aria-live="polite" aria-atomic="true">{message}</p>
+   </div>
+   <div className="workshop__creation-area">
+    <div className="workshop__preview-bar"><span>✦ Your creation</span><span>{idea.elements.length}/3 elements</span></div>
+    <div className={`workshop__preview ${styled?`is-styled theme-${idea.theme}`:'is-plain'} ${playing?'is-playing':''} ${!idea.elements.length?'is-empty':''}`}>
+     <div className="workshop__mini-site">
+      {!idea.elements.length&&<div className="workshop__empty"><span aria-hidden="true">◇</span><p>An empty canvas.<br/>Your first HTML element starts the story.</p></div>}
+      {idea.elements.includes('heading')&&<h3 className={tool==='html'&&highlight==='heading'?'is-highlighted':''}>Hello, new world.</h3>}
+      {idea.elements.includes('text')&&<p className={tool==='html'&&highlight==='text'?'is-highlighted':''}>A little idea. A place to grow.</p>}
+      {idea.elements.includes('button')&&<button type="button" className={tool==='html'&&highlight==='button'?'is-highlighted':''} onClick={launch}>{playing?'Replay the magic ↻':'Awaken my idea ↗'}</button>}
+     </div>
+     <div className="workshop__effect" key={run} aria-hidden="true">{playing&&(idea.action==='portal'?<div className="workshop__portal-effect"><i/><i/><span>✦</span></div>:<svg className="workshop__constellation" viewBox="0 0 200 150"><path d="M30 110L65 45L110 70L155 25L175 100L110 70L125 130L30 110"/>{[[30,110],[65,45],[110,70],[155,25],[175,100],[125,130]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r="3" style={{'--delay':`${i*.15}s`}}/>)}</svg>)}{playing&&<div className="workshop__burst">{Array.from({length:18},(_,i)=><i key={i} style={{'--angle':`${i*20}deg`,'--delay':`${i%3*.08}s`}}/>)}</div>}</div>
+    </div>
+    <div className="workshop__compare" role="group" aria-label="Compare technologies"><span>What changes?</span><label><input type="checkbox" disabled={!idea.styled} checked={withoutCSS} onChange={e=>{setWithoutCSS(e.target.checked);setMessage(e.target.checked?'CSS removed from the demo: the same HTML and JavaScript still work.':'CSS restored. Your design is back.');}}/> Remove CSS</label><label><input type="checkbox" disabled={!idea.wired} checked={withoutJS} onChange={e=>{stop();setWithoutJS(e.target.checked);setMessage(e.target.checked?'JavaScript removed from the demo: press your button and compare its response.':'JavaScript restored. Your button can run its action again.');}}/> Remove JavaScript</label></div>
+    <div className="workshop__tools-row"><div className="workshop__objects" role="group" aria-label="Magical tools">{TOOLS.map(t=><button type="button" key={t.id} className="workshop__object" aria-label={`Explore ${t.name}`} aria-pressed={tool===t.id} onClick={()=>setTool(t.id)}><img src={`/workshop/${t.image}`} alt="" draggable={false}/><strong>{t.name}</strong><small>{t.label}</small></button>)}</div><div className="workshop__guide"><Lumi className="workshop__lumi"/></div></div>
+    <div className={`workshop__result ${idea.completed?'is-complete':''}`}><span className="workshop__artifact" aria-hidden="true">{idea.completed?'✦':'◇'}</span><p><strong>{idea.completed?'Your idea is alive.':'Structure → style → interaction'}</strong><span>{idea.completed?(saved?'Saved in this browser. Replay it or keep exploring.':'Ready for this visit. Browser storage is unavailable.'):'Build and test your creation to awaken your idea.'}</span></p><button type="button" disabled={!idea.elements.length} onClick={reset}>Start again ↺</button></div>
+   </div>
+  </div>
+  <footer className="workshop__footer"><a href="#top" onClick={onReturn}>← Back to the portal</a><span>02 / 04 — Create your idea</span><a href="#observatory" onClick={onContinue}>Enter the observatory ↗</a></footer>
+ </section>;
 }
